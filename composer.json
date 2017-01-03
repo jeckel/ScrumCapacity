@@ -1,0 +1,13 @@
+{
+    "name": "jeckel/scrumcapacity",
+    "description": "Scrum capacity and velocity calculator",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Jeckel",
+            "email": "jeckel@jeckel.fr"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
