@@ -7,10 +7,10 @@ CODECEPTION = docker run --rm -it -v `pwd`:/project jeckel/codeception
 default: install
 
 install:
-	$(COMPOSER) install
+	$(COMPOSER) install --ignore-platform-reqs
 
 update:
-	$(COMPOSER) update
+	$(COMPOSER) update --ignore-platform-reqs
 
 test:
 	$(CODECEPTION) run

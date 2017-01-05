@@ -10,6 +10,9 @@
     ],
     "minimum-stability": "stable",
     "require": {},
+    "require-dev": {
+        "codeception/codeception": "2.*"
+    },
     "autoload": {
         "psr-4": {
             "Jeckel\\Scrum\\": "src/"
