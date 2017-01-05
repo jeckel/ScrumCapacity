@@ -6,7 +6,7 @@
  * Time: 18:29
  */
 
-namespace Jeckel\SC\Model;
+namespace Jeckel\Scrum\Model;
 
 /**
  * Class SprintMember
