@@ -17,4 +17,23 @@ class SprintTest extends Unit
         $this->assertSame($sprint, $sprint->setNbDays(10));
         $this->assertEquals(10, $sprint->getNbDays());
     }
+
+    public function testGetCapacity()
+    {
+        $member_1 = $this->createMock(SprintMember::class);
+        $member_1->expects($this->once())
+            ->method('getCapacity')
+            ->willReturn(7);
+
+        $member_2 = $this->createMock(SprintMember::class);
+        $member_2->expects($this->once())
+            ->method('getCapacity')
+            ->willReturn(9);
+
+        $sprint = new Sprint();
+        $sprint->addMember($member_1)->addMember($member_2);
+        $sprint->setNbDays(10);
+
+        $this->assertEquals(16, $sprint->getCapacity());
+    }
 }

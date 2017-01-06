@@ -13,4 +13,4 @@ update:
 	$(COMPOSER) update --ignore-platform-reqs
 
 test:
-	$(CODECEPTION) run
+	$(CODECEPTION) run --coverage-xml

@@ -9,8 +9,11 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "php": "^7.0",
+    },
     "require-dev": {
+        "satooshi/php-coveralls": "^1.0",
         "codeception/codeception": "2.*"
     },
     "autoload": {
