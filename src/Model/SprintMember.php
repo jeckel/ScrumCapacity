@@ -61,7 +61,7 @@ class SprintMember
     public function setAvailability(float $availability): self
     {
         if ($availability < 0 || $availability > 1 ) {
-            throw new \InvalidArgumentException("Availability must be between 0 and 1, $availability provided");
+            throw new \OutOfRangeException("Availability must be between 0 and 1, $availability provided");
         }
         $this->availability = $availability;
         return $this;

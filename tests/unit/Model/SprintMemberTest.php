@@ -27,7 +27,7 @@ class SprintMemberTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \OutOfRangeException
      */
     public function testSetTooLowAvailability()
     {
@@ -36,7 +36,7 @@ class SprintMemberTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \OutOfRangeException
      */
     public function testSetTooHighAvailability()
     {
