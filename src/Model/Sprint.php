@@ -25,7 +25,12 @@ class Sprint
     /**
      * @var int
      */
-    protected $nb_days;
+    protected $id;
+
+    /**
+     * @var int
+     */
+    protected $nb_days = 0;
 
     /**
      * @var array
@@ -41,6 +46,24 @@ class Sprint
      * @var string
      */
     protected $status = self::STATUS_PLANNED;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return self
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return int

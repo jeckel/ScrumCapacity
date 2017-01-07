@@ -11,6 +11,13 @@ use Codeception\Test\Unit;
  */
 class SprintTest extends Unit
 {
+    public function testSetGetId()
+    {
+        $sprint = new Sprint();
+        $this->assertSame($sprint, $sprint->setId(10));
+        $this->assertEquals(10, $sprint->getId());
+    }
+
     public function testSetGetNbDays()
     {
         $sprint = new Sprint();
