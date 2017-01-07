@@ -61,6 +61,7 @@ class Sprint
     }
 
     /**
+     * @todo : check that we do not add same member twice
      * @param SprintMember $member
      * @return Sprint
      */
