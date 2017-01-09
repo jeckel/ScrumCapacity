@@ -10,3 +10,4 @@ composer.phar
 
 tests/_support/_generated/*
 tests/_output/*
+/logs/app.log
