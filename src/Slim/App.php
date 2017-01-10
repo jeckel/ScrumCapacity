@@ -18,6 +18,11 @@ class App extends \Slim\App
 {
     public function init(): App
     {
+        return $this->initDependencies()->initRoutes();
+    }
+
+    protected function initDependencies(): App
+    {
         $container = $this->getContainer();
 
         // view renderer
@@ -37,8 +42,11 @@ class App extends \Slim\App
             return $logger;
         };
 
+        return $this;
+    }
 
-        // routes
+    protected function initRoutes(): App
+    {
         $this->get('/[{name}]', function ($request, $response, $args) {
             // Sample log message
             $this->logger->info("Slim-Skeleton '/' route");
