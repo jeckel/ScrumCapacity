@@ -14,17 +14,8 @@ require __DIR__ . '/../vendor/autoload.php';
 session_start();
 
 // Instantiate the app
-$settings = require __DIR__ . '/../src/settings.php';
-$app = new \Slim\App($settings);
-
-// Set up dependencies
-require __DIR__ . '/../src/dependencies.php';
-
-// Register middleware
-require __DIR__ . '/../src/middleware.php';
-
-// Register routes
-require __DIR__ . '/../src/routes.php';
+$settings = require __DIR__ . '/../config/config.php';
+$app = new \Jeckel\Scrum\Slim\App($settings);
 
 // Run app
-$app->run();
+$app->init()->run();

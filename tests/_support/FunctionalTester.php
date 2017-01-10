@@ -1,6 +1,6 @@
 <?php
 
-use Slim\App;
+use Jeckel\Scrum\Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\Environment;
@@ -64,24 +64,13 @@ class FunctionalTester extends \Codeception\Actor
         $response = new Response();
 
         // Use the application settings
-        $settings = require __DIR__ . '/../../src/settings.php';
+        $settings = require __DIR__ . '/../../config/config.php';
 
         // Instantiate the application
         $app = new App($settings);
 
-        // Set up dependencies
-        require __DIR__ . '/../../src/dependencies.php';
-
-        // Register middleware
-        if ($this->withMiddleware) {
-            require __DIR__ . '/../../src/middleware.php';
-        }
-
-        // Register routes
-        require __DIR__ . '/../../src/routes.php';
-
         // Process the application
-        $response = $app->process($request, $response);
+        $response = $app->init()->process($request, $response);
 
         // Return the response
         return $response;
