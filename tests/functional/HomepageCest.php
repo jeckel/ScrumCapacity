@@ -20,7 +20,7 @@ class HomepageCest
      */
     public function testGetHomepageWithoutName(FunctionalTester $I)
     {
-        $response = $I->runApp('GET', '/');
+        $response = $I->runApp('GET', '/hello/');
 
         $I->assertEquals(200, $response->getStatusCode());
         $I->assertContains('SlimFramework', (string)$response->getBody());
@@ -32,7 +32,7 @@ class HomepageCest
      */
     public function testGetHomepageWithGreeting(FunctionalTester $I)
     {
-        $response = $I->runApp('GET', '/name');
+        $response = $I->runApp('GET', '/hello/name');
 
         $I->assertEquals(200, $response->getStatusCode());
         $I->assertContains('Hello name!', (string)$response->getBody());
@@ -43,7 +43,7 @@ class HomepageCest
      */
     public function testPostHomepageNotAllowed(FunctionalTester $I)
     {
-        $response = $I->runApp('POST', '/', ['test']);
+        $response = $I->runApp('POST', '/hello/', ['test']);
 
         $I->assertEquals(405, $response->getStatusCode());
         $I->assertContains('Method not allowed', (string)$response->getBody());

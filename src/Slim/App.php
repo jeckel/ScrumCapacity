@@ -8,6 +8,7 @@
 
 namespace Jeckel\Scrum\Slim;
 
+use Jeckel\Scrum\Controller\ScrumController;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
@@ -47,7 +48,8 @@ class App extends \Slim\App
 
     protected function initRoutes(): App
     {
-        $this->get('/[{name}]', function ($request, $response, $args) {
+        $this->post('/sprint', ScrumController::class . ':postCalculate');
+        $this->get('/hello/[{name}]', function ($request, $response, $args) {
             // Sample log message
             $this->logger->info("Slim-Skeleton '/' route");
 
