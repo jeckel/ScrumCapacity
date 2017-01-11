@@ -9,5 +9,24 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "slim/slim": "^3.1",
+        "slim/php-view": "^2.0",
+        "monolog/monolog": "^1.17",
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "^1.0",
+        "codeception/codeception": "2.*"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Jeckel\\Scrum\\": "src/"
+        }
+    }
 }
