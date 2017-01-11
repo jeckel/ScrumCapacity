@@ -1,0 +1,12 @@
+---
+swagger: "2.0"
+info:
+  description: "Scrum Calculator"
+  version: "0.1.0"
+  title: "Scrum Calculator"
+host: "virtserver.swaggerhub.com"
+basePath: "/jeckel/ScrumCalculator/0.1.0"
+schemes:
+- "https"
+paths: {}
+definitions: {}
