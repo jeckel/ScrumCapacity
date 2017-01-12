@@ -1,0 +1,21 @@
+version: '2'
+services:
+  datastore:
+    image: mysql:5
+    hostname: datastore
+    env_file: .env
+    ports:
+      - 3306:3306
+    volumes:
+      - /var/lib/mysql
+      - ./mysql:/docker-entrypoint-initdb.d
+  app:
+    image: php:7-cli
+    env_file: .env
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/project
+    depends_on:
+      - datastore
+    command: php -S 0.0.0.0:8080 -t /project/public /project/public/index.php
