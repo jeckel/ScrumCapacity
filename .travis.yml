@@ -3,6 +3,12 @@ language: php
 php:
     - 7.0
 
+services:
+  - mysql
+
+before_install:
+  - mysql -e 'CREATE DATABASE scrum;'
+
 before_script:
     # Start up a web server.
     #- php -S 127.0.0.1:8888 -t /path/to/web/root >/dev/null 2>&1 &
@@ -13,7 +19,7 @@ before_script:
     - composer install --prefer-source
 
 script:
-    - vendor/bin/codecept run --coverage-xml
+    - vendor/bin/codecept run --coverage-xml --env travis
 
 after_script:
     - ./vendor/bin/coveralls
