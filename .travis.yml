@@ -4,10 +4,11 @@ php:
     - 7.0
 
 env:
-- MYSQL_HOSTNAME=localhost
-- MYSQL_USER=root
-- MYSQL_PASSWORD=
-- MYSQL_DATABASE=scrum
+  global:
+    - MYSQL_HOSTNAME=localhost
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=
+    - MYSQL_DATABASE=scrum
 
 services:
   - mysql
