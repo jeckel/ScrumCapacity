@@ -13,7 +13,8 @@ update:
 	$(COMPOSER) update --ignore-platform-reqs
 
 test:
-	$(CODECEPTION) run --coverage-xml
+	docker-compose run --rm codeception
+	#$(CODECEPTION) run --coverage-xml
 
 run:
 	docker-compose -d up

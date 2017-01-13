@@ -19,7 +19,7 @@ class ScrumController
     /**
      * @var Container
      */
-    protected $app;
+    protected $container;
 
     /**
      * ScrumController constructor.
@@ -27,12 +27,12 @@ class ScrumController
      */
     public function __construct(Container $container)
     {
-        $this->app = $container;
+        $this->container = $container;
     }
 
     public function postCalculate(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
-        $this->app->logger->info("Slim-Skeleton '/sprint' route");
+        $this->container->logger->info("Slim-Skeleton '/sprint' route");
 
         $body = $request->getParsedBody();
         $sprint = new Sprint();

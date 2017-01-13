@@ -25,7 +25,7 @@ class CalculateSprintCest
             ]
         ];
 
-        $response = $I->runApp('POST', '/sprint', $data);
+        $response = $I->runApp('POST', '/scrum', $data);
         $I->assertEquals(200, $response->getStatusCode());
         $I->assertEquals("{\"capacity\":14}", (string) $response->getBody());
     }

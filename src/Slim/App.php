@@ -9,12 +9,17 @@
 namespace Jeckel\Scrum\Slim;
 
 use Jeckel\Scrum\Controller\ScrumController;
+use Jeckel\Scrum\Controller\SprintController;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Slim\Container;
 use Slim\Views\PhpRenderer;
 
+/**
+ * Class App
+ * @package Jeckel\Scrum\Slim
+ */
 class App extends \Slim\App
 {
     public function init(): App
@@ -59,7 +64,18 @@ class App extends \Slim\App
 
     protected function initRoutes(): App
     {
-        $this->post('/sprint', ScrumController::class . ':postCalculate');
+        $this->group(
+            '/sprint/{id:[0-9]+}',
+            function () {
+                $this->get('', SprintController::class . ':getSprint');
+            }
+        );
+        $this->post('/sprint', SprintController::class . ':addSprint');
+
+
+        $this->post('/scrum', ScrumController::class . ':postCalculate');
+
+
         $this->get('/hello/[{name}]', function ($request, $response, $args) {
             // Sample log message
             $this->logger->info("Slim-Skeleton '/' route");

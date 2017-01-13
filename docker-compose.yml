@@ -5,7 +5,7 @@ services:
     hostname: datastore
     env_file: .env
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - /var/lib/mysql
       - ./mysql:/docker-entrypoint-initdb.d
@@ -19,3 +19,11 @@ services:
     depends_on:
       - datastore
     command: php -S 0.0.0.0:8080 -t /project/public /project/public/index.php
+  codeception:
+    image: jeckel/codeception
+    env_file: .env
+    volumes:
+      - .:/project
+    depends_on:
+      - datastore
+    command: run --coverage-xml

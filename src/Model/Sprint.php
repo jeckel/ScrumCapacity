@@ -8,29 +8,35 @@
 
 namespace Jeckel\Scrum\Model;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class Sprint
  * @package Jeckel\Scrum\Model
  */
-/**
- * Class Sprint
- * @package Jeckel\Scrum\Model
- */
-class Sprint
+class Sprint extends Model
 {
     const STATUS_PLANNED = 'planned';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CURRENT = 'current';
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected $table = 'sprint';
+    protected $primaryKey = 'sprint_id';
 
     /**
      * @var int
      */
-    protected $nb_days = 0;
+    protected $sprint_id;
+
+//    /**
+//     * @var int
+//     */
+//    protected $nb_days = 0;
+//
+//    /**
+//     * @var string
+//     */
+//    protected $name = '';
 
     /**
      * @var array
@@ -52,7 +58,7 @@ class Sprint
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->sprint_id;
     }
 
     /**
@@ -61,7 +67,25 @@ class Sprint
      */
     public function setId(int $id): self
     {
-        $this->id = $id;
+        $this->sprint_id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return self
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
         return $this;
     }
 
