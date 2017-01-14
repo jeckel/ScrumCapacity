@@ -9,6 +9,7 @@
 namespace Jeckel\Scrum\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Sprint
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Sprint extends Model
 {
+    use SoftDeletes;
+
     const STATUS_PLANNED = 'planned';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CURRENT = 'current';
@@ -24,19 +27,11 @@ class Sprint extends Model
     protected $primaryKey = 'sprint_id';
 
     /**
-     * @var int
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
      */
-    protected $sprint_id;
-
-//    /**
-//     * @var int
-//     */
-//    protected $nb_days = 0;
-//
-//    /**
-//     * @var string
-//     */
-//    protected $name = '';
+    protected $dates = ['deleted_at'];
 
     /**
      * @var array

@@ -68,6 +68,8 @@ class App extends \Slim\App
             '/sprint/{id:[0-9]+}',
             function () {
                 $this->get('', SprintController::class . ':getSprint');
+                $this->put('', SprintController::class . ':putSprint');
+                $this->delete('', SprintController::class . ':deleteSprint');
             }
         );
         $this->post('/sprint', SprintController::class . ':addSprint');
