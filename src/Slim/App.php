@@ -10,10 +10,14 @@ namespace Jeckel\Scrum\Slim;
 
 use Jeckel\Scrum\Controller\ScrumController;
 use Jeckel\Scrum\Controller\SprintController;
+use Jeckel\Scrum\Slim\Middleware\JsonResponse;
+use Jeckel\Scrum\Slim\Renderer\JsonRenderer;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Container;
+use Slim\Http\Headers;
 use Slim\Views\PhpRenderer;
 
 /**
@@ -32,10 +36,14 @@ class App extends \Slim\App
         $container = $this->getContainer();
 
         // view renderer
-        $container['renderer'] = function ($c) {
-            /** @var Container $c */
-            $settings = $c->get('settings')['renderer'];
-            return new PhpRenderer($settings['template_path']);
+//        $container['renderer'] = function ($c) {
+//            /** @var Container $c */
+//            $settings = $c->get('settings')['renderer'];
+//            return new PhpRenderer($settings['template_path']);
+//        };
+
+        $container['json_renderer'] = function ($c) {
+            return new JsonRenderer();
         };
 
         // monolog
@@ -78,13 +86,13 @@ class App extends \Slim\App
         $this->post('/scrum', ScrumController::class . ':postCalculate');
 
 
-        $this->get('/hello/[{name}]', function ($request, $response, $args) {
-            // Sample log message
-            $this->logger->info("Slim-Skeleton '/' route");
-
-            // Render index view
-            return $this->renderer->render($response, 'index.phtml', $args);
-        });
+//        $this->get('/hello/[{name}]', function ($request, $response, $args) {
+//            // Sample log message
+//            $this->logger->info("Slim-Skeleton '/' route");
+//
+//            // Render index view
+//            return $this->renderer->render($response, 'index.phtml', $args);
+//        });
 
         return $this;
     }

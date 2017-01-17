@@ -14,6 +14,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use \Slim\Container;
 
+/**
+ * Class SprintController
+ * @package Jeckel\Scrum\Controller
+ */
 class SprintController
 {
     /**
@@ -33,6 +37,12 @@ class SprintController
         $this->container->get('db');
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function addSprint(ServerRequestInterface $request, ResponseInterface $response, $args): ResponseInterface
     {
         $this->container->logger->info(__METHOD__);
@@ -47,6 +57,12 @@ class SprintController
         return $response->withJson(['sprint_id' => 1]);
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function getSprint(ServerRequestInterface $request, ResponseInterface $response, $args): ResponseInterface
     {
         $this->container->logger->info(__METHOD__);
@@ -57,9 +73,16 @@ class SprintController
         } catch (ModelNotFoundException $e) {
             return $response->withJson(['error' => '404 Not found'], 404);
         }
-        return $response->withJson($sprint->toArray());
+        return $this->container->json_renderer->render($response, $sprint->toArray());
+//        return $response->withJson($sprint->toArray());
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return mixed
+     */
     public function putSprint(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         $this->container->logger->info(__METHOD__);
@@ -82,6 +105,12 @@ class SprintController
         return $response->withJson($sprint->toArray());
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param $args
+     * @return mixed
+     */
     public function deleteSprint(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         $this->container->logger->info(__METHOD__);

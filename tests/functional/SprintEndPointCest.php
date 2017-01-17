@@ -42,6 +42,7 @@ class SprintEndPointCest
 
         $response = $I->runApp('GET', '/sprint/256');
         $I->assertEquals(200, $response->getStatusCode());
+        var_dump((string) $response->getBody());
 
         $I->assertJsonAreEquals(json_encode($data), (string) $response->getBody());
     }
