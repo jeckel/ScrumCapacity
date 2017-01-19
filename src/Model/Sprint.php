@@ -201,4 +201,12 @@ class Sprint extends Model
         }
         return $this->points_done / $capacity;
     }
+
+    public function toJsonArray()
+    {
+        $array = ['id' => $this->getId(), 'type' => 'sprint'];
+        $array = array_merge($array, $this->toArray());
+        unset($array['sprint_id']);
+        return $array;
+    }
 }

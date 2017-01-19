@@ -64,7 +64,7 @@ class SprintController extends AbstractController implements LoggerAwareInterfac
         }
 
         $this->renderer->addLink("self", $this->router->pathFor('sprint', ['id' => $sprint->getId()]));
-        return $this->renderer->render($response, $sprint->toArray());
+        return $this->renderer->render($response, $sprint->toJsonArray());
     }
 
     /**

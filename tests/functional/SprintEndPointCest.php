@@ -43,7 +43,15 @@ class SprintEndPointCest
 
         $expected = [
             'links' => ['self' => 'http://localhost/sprint/256'],
-            'data' => $data
+            'data' => [
+                'id' => 256,
+                'type' => 'sprint',
+                'name' => 'Sprint #256',
+                'nb_days' => 8,
+                'created_at' => '2017-01-14 20:00:00',
+                'updated_at' => '2017-01-14 23:00:00',
+                'deleted_at' => null
+            ]
         ];
 
         $I->assertJsonAreEquals(json_encode($expected), (string) $response->getBody());

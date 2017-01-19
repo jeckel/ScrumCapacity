@@ -30,7 +30,7 @@ class JsonRenderer
      * @param $data
      * @return ResponseInterface
      */
-    public function render(ResponseInterface $response, $data): ResponseInterface
+    public function render(ResponseInterface $response, $data, $code = 200): ResponseInterface
     {
         $json = [];
         if (! empty($this->links)) {
@@ -38,7 +38,7 @@ class JsonRenderer
         }
         $json['data'] = $data;
 
-        return $response->withJson($json);
+        return $response->withJson($json, $code);
     }
 
     /**
