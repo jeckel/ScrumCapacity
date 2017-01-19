@@ -1,8 +1,6 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: jmercier
+ * User: Julien MERCIER <jeckel@jeckel.fr>
  * Date: 11/01/17
  * Time: 11:35
  */

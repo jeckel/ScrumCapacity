@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jmercier
+ * User: Julien MERCIER <jeckel@jeckel.fr>
  * Date: 13/01/17
  * Time: 16:58
  */
@@ -9,33 +8,30 @@
 namespace Jeckel\Scrum\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Jeckel\Scrum\JsonEntity\SprintEntity;
 use Jeckel\Scrum\Model\Sprint;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use \Slim\Container;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Slim\Interfaces\RouterInterface;
 
 /**
  * Class SprintController
  * @package Jeckel\Scrum\Controller
  */
-class SprintController
+class SprintController implements LoggerAwareInterface
 {
-    /**
-     * @var Container
-     */
-    protected $container;
+    use LoggerAwareTrait;
 
-    /**
-     * ScrumController constructor.
-     * @param Container $container
-     */
-    public function __construct(Container $container)
+    protected $router;
+
+    public function setRouter(RouterInterface $router): self
     {
-        // @todo is it required to affect the full container, and not only what's needed ?
-        $this->container = $container;
-        // @todo : find a way to initialze DB elsewhere
-        $this->container->get('db');
+        $this->router = $router;
+        return $this;
     }
+
 
     /**
      * @param ServerRequestInterface $request
@@ -45,7 +41,7 @@ class SprintController
      */
     public function addSprint(ServerRequestInterface $request, ResponseInterface $response, $args): ResponseInterface
     {
-        $this->container->logger->info(__METHOD__);
+        $this->logger->info(__METHOD__);
 
         $body = $request->getParsedBody();
 
@@ -65,7 +61,7 @@ class SprintController
      */
     public function getSprint(ServerRequestInterface $request, ResponseInterface $response, $args): ResponseInterface
     {
-        $this->container->logger->info(__METHOD__);
+        $this->logger->info(__METHOD__);
 
         try {
             /** @var Sprint $sprint */
@@ -73,8 +69,13 @@ class SprintController
         } catch (ModelNotFoundException $e) {
             return $response->withJson(['error' => '404 Not found'], 404);
         }
-        return $this->container->json_renderer->render($response, $sprint->toArray());
-//        return $response->withJson($sprint->toArray());
+
+        $entity = new SprintEntity($sprint);
+        $entity->addLink("self", $this->router->pathFor('sprint', [
+            'id' => $sprint->getId()
+        ]));
+
+        return $response->withJson($entity->getJsonArray());
     }
 
     /**
@@ -85,7 +86,7 @@ class SprintController
      */
     public function putSprint(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
-        $this->container->logger->info(__METHOD__);
+        $this->logger->info(__METHOD__);
 
         $body = $request->getParsedBody();
         try {
@@ -113,7 +114,7 @@ class SprintController
      */
     public function deleteSprint(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
-        $this->container->logger->info(__METHOD__);
+        $this->logger->info(__METHOD__);
 
         try {
             /** @var Sprint $sprint */

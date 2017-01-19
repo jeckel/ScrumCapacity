@@ -1,14 +1,14 @@
 <?php
+/**
+ * User: Julien MERCIER <jeckel@jeckel.fr>
+ * Date: 06/01/17
+ * Time: 11:55
+ */
+
 namespace Jeckel\Scrum\Model;
 
 use Codeception\Test\Unit;
 
-/**
- * Created by PhpStorm.
- * User: jmercier
- * Date: 06/01/17
- * Time: 11:55
- */
 class SprintTest extends Unit
 {
     public function testSetGetId()

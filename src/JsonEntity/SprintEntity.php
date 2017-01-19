@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jmercier
+ * User: Julien MERCIER <jeckel@jeckel.fr>
  * Date: 18/01/17
  * Time: 08:53
  */
@@ -21,6 +20,8 @@ class SprintEntity extends AbstractEntity
      */
     protected $model;
 
+    protected $links;
+
     /**
      * Sprint constructor.
      * @param Sprint $model
@@ -30,11 +31,24 @@ class SprintEntity extends AbstractEntity
         $this->model = $model;
     }
 
+    public function addLink(string $key, string $link): SprintEntity
+    {
+        $this->links[$key] = $link;
+        return $this;
+    }
+
+    protected function getLinks(): array
+    {
+        return $this->links;
+    }
+
     /**
      * @return array
      */
     protected function getData(): array
     {
-        return $this->model->toArray();
+        $data = $this->model->toArray();
+        unset($data['deleted_at']);
+        return $data;
     }
 }

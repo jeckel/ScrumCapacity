@@ -1,13 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jeckel
+ * User: Julien MERCIER <jeckel@jeckel.fr>
  * Date: 17/01/17
  * Time: 22:54
  */
-
 namespace Jeckel\Scrum\Slim\Renderer;
-
 
 use Psr\Http\Message\ResponseInterface;
 
