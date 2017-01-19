@@ -41,20 +41,9 @@ class SprintEndPointCest
         $response = $I->runApp('GET', '/sprint/256');
         $I->assertEquals(200, $response->getStatusCode());
 
-        $expected = [
-            'links' => ['self' => 'http://localhost/sprint/256'],
-            'data' => [
-                'id' => 256,
-                'type' => 'sprint',
-                'name' => 'Sprint #256',
-                'nb_days' => 8,
-                'created_at' => '2017-01-14 20:00:00',
-                'updated_at' => '2017-01-14 23:00:00',
-                'deleted_at' => null
-            ]
-        ];
+        $expected = file_get_contents(__DIR__ . '/Fixtures/Sprint256.json');
 
-        $I->assertJsonAreEquals(json_encode($expected), (string) $response->getBody());
+        $I->assertJsonAreEquals($expected, (string) $response->getBody());
     }
 
     public function testGetNotFoundSprint(\FunctionalTester $I)
