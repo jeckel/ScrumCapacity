@@ -40,9 +40,13 @@ class SprintEndPointCest
 
         $response = $I->runApp('GET', '/sprint/256');
         $I->assertEquals(200, $response->getStatusCode());
-        var_dump((string) $response->getBody());
 
-        $I->assertJsonAreEquals(json_encode($data), (string) $response->getBody());
+        $expected = [
+            'links' => ['self' => 'http://localhost/sprint/256'],
+            'data' => $data
+        ];
+
+        $I->assertJsonAreEquals(json_encode($expected), (string) $response->getBody());
     }
 
     public function testGetNotFoundSprint(\FunctionalTester $I)

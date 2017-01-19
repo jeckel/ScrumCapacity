@@ -7,12 +7,30 @@
 namespace Jeckel\Scrum\Slim\Renderer;
 
 use Psr\Http\Message\ResponseInterface;
+use Slim\Http\Uri;
 
+/**
+ * Class JsonRenderer
+ * @package Jeckel\Scrum\Slim\Renderer
+ */
 class JsonRenderer
 {
+    /**
+     * @var array
+     */
     protected $links = [];
 
-    public function render(ResponseInterface $response, array $data = []): ResponseInterface
+    /**
+     * @var Uri
+     */
+    protected $uri;
+
+    /**
+     * @param ResponseInterface $response
+     * @param $data
+     * @return ResponseInterface
+     */
+    public function render(ResponseInterface $response, $data): ResponseInterface
     {
         $json = [];
         if (! empty($this->links)) {
@@ -23,9 +41,27 @@ class JsonRenderer
         return $response->withJson($json);
     }
 
-    public function setLink(string $key, string $link): JsonRenderer
+    /**
+     * @param string $key
+     * @param string $link
+     * @return JsonRenderer
+     */
+    public function addLink(string $key, string $link): JsonRenderer
     {
-        $this->links[$key] = $link;
+        if ($link[0] == '/') {
+            $prefix = $this->uri->getScheme() . '://' . $this->uri->getHost();
+            $this->links[$key] = $prefix . $link;
+        } else {
+            $this->links[$key] = $link;
+        }
         return $this;
+    }
+
+    /**
+     * @param Uri $uri
+     */
+    public function setUri(Uri $uri)
+    {
+        $this->uri = $uri;
     }
 }

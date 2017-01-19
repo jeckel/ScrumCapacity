@@ -8,30 +8,23 @@
 namespace Jeckel\Scrum\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Jeckel\Scrum\Common\RouterAwareInterface;
+use Jeckel\Scrum\Common\RouterAwareTrait;
 use Jeckel\Scrum\JsonEntity\SprintEntity;
 use Jeckel\Scrum\Model\Sprint;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Slim\Interfaces\RouterInterface;
 
 /**
  * Class SprintController
  * @package Jeckel\Scrum\Controller
  */
-class SprintController implements LoggerAwareInterface
+class SprintController extends AbstractController implements LoggerAwareInterface, RouterAwareInterface
 {
     use LoggerAwareTrait;
-
-    protected $router;
-
-    public function setRouter(RouterInterface $router): self
-    {
-        $this->router = $router;
-        return $this;
-    }
-
+    use RouterAwareTrait;
 
     /**
      * @param ServerRequestInterface $request
@@ -70,12 +63,8 @@ class SprintController implements LoggerAwareInterface
             return $response->withJson(['error' => '404 Not found'], 404);
         }
 
-        $entity = new SprintEntity($sprint);
-        $entity->addLink("self", $this->router->pathFor('sprint', [
-            'id' => $sprint->getId()
-        ]));
-
-        return $response->withJson($entity->getJsonArray());
+        $this->renderer->addLink("self", $this->router->pathFor('sprint', ['id' => $sprint->getId()]));
+        return $this->renderer->render($response, $sprint->toArray());
     }
 
     /**
