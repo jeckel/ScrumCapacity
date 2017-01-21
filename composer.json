@@ -9,12 +9,6 @@
         }
     ],
     "minimum-stability": "stable",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/jeckel/JsonApiResponse"
-        }
-    ],
     "require": {
         "slim/slim": "^3.1",
         "monolog/monolog": "^1.17",

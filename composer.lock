@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd91bce6efc5508adc09521b76bdc05a",
+    "content-hash": "53d26d2e529e3efd0bcc04572d27c39f",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -329,11 +329,7 @@
                     "Jeckel\\JsonApiResponse\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\Jeckel\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Julien Mercier",
@@ -341,10 +337,6 @@
                 }
             ],
             "description": "JsonApi Response generator",
-            "support": {
-                "source": "https://github.com/jeckel/JsonApiResponse/tree/master",
-                "issues": "https://github.com/jeckel/JsonApiResponse/issues"
-            },
             "time": "2017-01-21 17:56:41"
         },
         {
