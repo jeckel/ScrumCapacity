@@ -8,9 +8,9 @@
 namespace Jeckel\Scrum\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Jeckel\JsonApiResponse\SingleDocument;
 use Jeckel\Scrum\Common\RouterAwareInterface;
 use Jeckel\Scrum\Common\RouterAwareTrait;
-use Jeckel\Scrum\Json\SingleDocument;
 use Jeckel\Scrum\Model\Sprint;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -66,11 +66,12 @@ class SprintController extends AbstractController implements LoggerAwareInterfac
         $prefix = $request->getUri()->getScheme() . '://' . $request->getUri()->getHost();
 
         $document = new SingleDocument();
-        $document->getData()
-            ->setId($sprint->getId())
-            ->setType('sprint')
-            ->setAttributes($sprint->jsonSerialize());
-        $document->setLinks(['self' => $prefix . $this->router->pathFor('sprint', ['id' => $sprint->getId()])]);
+        $document->data = [
+            'id' => (string) $sprint->getId(),
+            'type' => 'sprint',
+            'attributes' => $sprint->jsonSerialize()
+        ];
+        $document->links->self = $prefix . $this->router->pathFor('sprint', ['id' => $sprint->getId()]);
 
         return $response->withJson($document->jsonSerialize());
 //        $this->renderer->addLink("self", $this->router->pathFor('sprint', ['id' => $sprint->getId()]));
