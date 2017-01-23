@@ -15,7 +15,7 @@ class SprintEndPointCest
 
         $response = $I->runApp('POST', '/sprint', $data);
 
-        $I->assertNotEquals(200, $response->getStatusCode());
+        $I->assertEquals(200, $response->getStatusCode());
 
         $response_data = json_decode((string) $response->getBody());
         $I->seeInDatabase('sprint', [

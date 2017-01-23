@@ -11,6 +11,13 @@ env:
     - MYSQL_PASSWORD=
     - MYSQL_DATABASE=scrum
 
+notifications:
+  email:
+    recipients:
+      - devci@j3ck3l.me
+    on_success: change # default: change
+    on_failure: always # default: always
+
 services:
   - mysql
 
