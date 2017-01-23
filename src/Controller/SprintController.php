@@ -21,7 +21,7 @@ use Psr\Log\LoggerAwareTrait;
  * Class SprintController
  * @package Jeckel\Scrum\Controller
  */
-class SprintController extends AbstractController implements LoggerAwareInterface, RouterAwareInterface
+class SprintController implements LoggerAwareInterface, RouterAwareInterface
 {
     use LoggerAwareTrait;
     use RouterAwareTrait;

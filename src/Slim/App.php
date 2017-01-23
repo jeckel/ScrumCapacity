@@ -34,10 +34,6 @@ class App extends \Slim\App
     {
         $container = $this->getContainer();
 
-        $container['json_renderer'] = function ($c) {
-            return new JsonRenderer();
-        };
-
         // monolog
         $container['logger'] = function ($c) {
             /** @var Container $c */
@@ -64,12 +60,6 @@ class App extends \Slim\App
 
     protected function initRoutes(): App
     {
-        $this->add(function ($request, $response, $next) {
-            $this->json_renderer->setUri($request->getUri());
-            return $next($request, $response);
-        });
-
-
         $this->group(
             '/sprint/{id:[0-9]+}',
             function () {

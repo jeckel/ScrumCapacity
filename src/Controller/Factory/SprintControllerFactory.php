@@ -28,7 +28,6 @@ class SprintControllerFactory implements FactoryInterface
 
         $controller = new SprintController($c);
         $controller->setRouter($c->router)
-            ->setRenderer($c->json_renderer)
             ->setLogger($c->logger);
         return $controller;
     }
