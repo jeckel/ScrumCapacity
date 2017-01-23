@@ -16,14 +16,20 @@ class SprintEndPointCest
         $response = $I->runApp('POST', '/sprint', $data);
 
         $I->assertEquals(200, $response->getStatusCode());
-        $I->assertEquals("{\"sprint_id\":1}", (string) $response->getBody());
+//        $I->assertEquals("{\"sprint_id\":1}", (string) $response->getBody());
 
         $response_data = json_decode((string) $response->getBody());
         $I->seeInDatabase('sprint', [
-            'sprint_id' => $response_data->sprint_id,
+            'sprint_id' => $response_data->data->id,
             'name'      => 'Sprint #0',
             'nb_days'   => 10
         ]);
+//        $created_at = $I->grabFromDatabase('created_at', 'sprint', array('sprint_id' => $response_data->data->id));
+//        $updated_at = $I->grabFromDatabase('updated_at', 'sprint', array('sprint_id' => $response_data->data->id));
+        $expected = json_decode(file_get_contents(__DIR__ . '/Fixtures/Sprint1.json'));
+        $expected->data->attributes->created_at = $I->grabFromDatabase('sprint', 'created_at', array('sprint_id' => $response_data->data->id));
+        $expected->data->attributes->updated_at = $I->grabFromDatabase('sprint', 'updated_at', array('sprint_id' => $response_data->data->id));
+        $I->assertJsonAreEquals(json_encode($expected), (string) $response->getBody());
     }
 
     public function testGetSprint(\FunctionalTester $I)
