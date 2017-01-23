@@ -1,6 +1,6 @@
 {
   "links": {
-    "self": "http://localhost/sprint/256"
+    "self": "/sprint/256"
   },
   "data": {
     "type": "sprint",

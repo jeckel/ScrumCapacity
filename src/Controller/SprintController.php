@@ -43,7 +43,7 @@ class SprintController implements LoggerAwareInterface, RouterAwareInterface
         $sprint->setName($body['name']);
         $sprint->save();
 
-        return $response->withJson(['sprint_id' => 1]);
+        return $response->withJson($this->getSingleSprintResponse($sprint)->jsonSerialize());
     }
 
     /**
@@ -63,19 +63,7 @@ class SprintController implements LoggerAwareInterface, RouterAwareInterface
             return $response->withJson(['error' => '404 Not found'], 404);
         }
 
-        $prefix = $request->getUri()->getScheme() . '://' . $request->getUri()->getHost();
-
-        $document = new SingleDocument();
-        $document->data = [
-            'id' => (string) $sprint->getId(),
-            'type' => 'sprint',
-            'attributes' => $sprint->jsonSerialize()
-        ];
-        $document->links->self = $prefix . $this->router->pathFor('sprint', ['id' => $sprint->getId()]);
-
-        return $response->withJson($document->jsonSerialize());
-//        $this->renderer->addLink("self", $this->router->pathFor('sprint', ['id' => $sprint->getId()]));
-//        return $this->renderer->render($response, $sprint->toJsonArray());
+        return $response->withJson($this->getSingleSprintResponse($sprint)->jsonSerialize());
     }
 
     /**
@@ -125,5 +113,19 @@ class SprintController implements LoggerAwareInterface, RouterAwareInterface
 
         $sprint->delete();
         return $response->withJson([]);
+    }
+
+    protected function getSingleSprintResponse(Sprint $sprint)
+    {
+        return new SingleDocument([
+            'data' => [
+                'id' => $sprint->getJsonId(),
+                'type' => $sprint->getJsonType(),
+                'attributes' => $sprint->getJsonAttributes()
+            ],
+            'links' => [
+                'self' => $this->router->pathFor('sprint', ['id' => $sprint->getId()])
+            ]
+        ]);
     }
 }

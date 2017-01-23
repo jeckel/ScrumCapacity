@@ -14,13 +14,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Sprint
  * @package Jeckel\Scrum\Model
  */
-class Sprint extends Model
+class Sprint extends Model implements JsonableInterface
 {
     use SoftDeletes;
+    use JsonableTrait;
 
     const STATUS_PLANNED = 'planned';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CURRENT = 'current';
+
+    const TYPE = 'sprint';
 
     protected $table = 'sprint';
     protected $primaryKey = 'sprint_id';
@@ -202,12 +205,13 @@ class Sprint extends Model
         return $this->points_done / $capacity;
     }
 
-    public function jsonSerialize()
-    {
-        //$array = ['id' => $this->getId(), 'type' => 'sprint'];
-        //$array = array_merge($array, $this->toArray());
-        $array = $this->toArray();
-        unset($array['sprint_id']);
-        return $array;
-    }
-}
+//    public function jsonSerialize()
+//    {
+//        //$array = ['id' => $this->getId(), 'type' => 'sprint'];
+//        //$array = array_merge($array, $this->toArray());
+//        $array = $this->toArray();
+//        unset($array['sprint_id']);
+//        return $array;
+//    }
+
+ }
