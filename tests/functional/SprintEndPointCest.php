@@ -15,8 +15,7 @@ class SprintEndPointCest
 
         $response = $I->runApp('POST', '/sprint', $data);
 
-        $I->assertEquals(200, $response->getStatusCode());
-//        $I->assertEquals("{\"sprint_id\":1}", (string) $response->getBody());
+        $I->assertNotEquals(200, $response->getStatusCode());
 
         $response_data = json_decode((string) $response->getBody());
         $I->seeInDatabase('sprint', [
@@ -24,8 +23,7 @@ class SprintEndPointCest
             'name'      => 'Sprint #0',
             'nb_days'   => 10
         ]);
-//        $created_at = $I->grabFromDatabase('created_at', 'sprint', array('sprint_id' => $response_data->data->id));
-//        $updated_at = $I->grabFromDatabase('updated_at', 'sprint', array('sprint_id' => $response_data->data->id));
+
         $expected = json_decode(file_get_contents(__DIR__ . '/Fixtures/Sprint1.json'));
         $expected->data->attributes->created_at = $I->grabFromDatabase('sprint', 'created_at', array('sprint_id' => $response_data->data->id));
         $expected->data->attributes->updated_at = $I->grabFromDatabase('sprint', 'updated_at', array('sprint_id' => $response_data->data->id));
