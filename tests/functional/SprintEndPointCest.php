@@ -6,6 +6,27 @@
  */
 class SprintEndPointCest
 {
+    public function testGetSprint(\FunctionalTester $I)
+    {
+        $data = [
+            'name' => 'Sprint #256',
+            'sprint_id' => 256,
+            'nb_days' => 8,
+            'created_at' => '2017-01-14 20:00:00',
+            'updated_at' => '2017-01-14 23:00:00',
+            'deleted_at' => null
+        ];
+        $I->haveInDatabase('sprint', $data);
+
+        $response = $I->runApp('GET', '/sprint/256');
+        $I->assertEquals(200, $response->getStatusCode());
+
+        $expected = file_get_contents(__DIR__ . '/Fixtures/Sprint256.json');
+
+        $I->assertJsonAreEquals($expected, (string) $response->getBody());
+    }
+
+
     public function testPostSprint(\FunctionalTester $I)
     {
         $data = [
@@ -30,25 +51,6 @@ class SprintEndPointCest
         $I->assertJsonAreEquals(json_encode($expected), (string) $response->getBody());
     }
 
-    public function testGetSprint(\FunctionalTester $I)
-    {
-        $data = [
-            'name' => 'Sprint #256',
-            'sprint_id' => 256,
-            'nb_days' => 8,
-            'created_at' => '2017-01-14 20:00:00',
-            'updated_at' => '2017-01-14 23:00:00',
-            'deleted_at' => null
-        ];
-        $I->haveInDatabase('sprint', $data);
-
-        $response = $I->runApp('GET', '/sprint/256');
-        $I->assertEquals(200, $response->getStatusCode());
-
-        $expected = file_get_contents(__DIR__ . '/Fixtures/Sprint256.json');
-
-        $I->assertJsonAreEquals($expected, (string) $response->getBody());
-    }
 
     public function testGetNotFoundSprint(\FunctionalTester $I)
     {

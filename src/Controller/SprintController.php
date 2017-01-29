@@ -91,7 +91,8 @@ class SprintController implements LoggerAwareInterface, RouterAwareInterface
             $sprint->setName($body['name']);
         }
         $sprint->save();
-        return $response->withJson($sprint->toArray());
+        return $response->withJson($this->getSingleSprintResponse($sprint)->jsonSerialize());
+//        return $response->withJson($sprint->toArray());
     }
 
     /**
@@ -115,6 +116,10 @@ class SprintController implements LoggerAwareInterface, RouterAwareInterface
         return $response->withJson([]);
     }
 
+    /**
+     * @param Sprint $sprint
+     * @return SingleDocument
+     */
     protected function getSingleSprintResponse(Sprint $sprint)
     {
         return new SingleDocument([
