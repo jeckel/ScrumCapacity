@@ -1,11 +1,9 @@
 CREATE TABLE `sprint`
 (
   `sprint_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nb_days` INT(11) NOT NULL DEFAULT 0,
-  `name` VARCHAR(64) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
-  `deleted_at` DATETIME NULL,
+  `nb_days` INT(11),
+  `created_at` TIMESTAMP,
+  `updated_at` TIMESTAMP,
   PRIMARY KEY (`sprint_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 

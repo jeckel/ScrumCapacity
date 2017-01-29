@@ -20,7 +20,15 @@ coverage:
 modules:
     config:
         Db:
-            dsn: ''
-            user: ''
-            password: ''
+            dsn: 'mysql:host=datastore;port=3306;dbname=scrum'
+            user: 'username'
+            password: 'password'
             dump: tests/_data/dump.sql
+env:
+    travis:
+      modules:
+          config:
+              Db:
+                  dsn: 'mysql:host=localhost;port=3306;dbname=scrum'
+                  user: 'root'
+                  password: ''

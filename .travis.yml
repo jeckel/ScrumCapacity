@@ -2,6 +2,27 @@
 language: php
 php:
     - 7.0
+    - 7.1
+
+env:
+  global:
+    - MYSQL_HOSTNAME=localhost
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=
+    - MYSQL_DATABASE=scrum
+
+notifications:
+  email:
+    recipients:
+      - devci@j3ck3l.me
+    on_success: change # default: change
+    on_failure: always # default: always
+
+services:
+  - mysql
+
+before_install:
+  - mysql -e 'CREATE DATABASE scrum;'
 
 before_script:
     # Start up a web server.
@@ -13,7 +34,7 @@ before_script:
     - composer install --prefer-source
 
 script:
-    - vendor/bin/codecept run --coverage-xml
+    - vendor/bin/codecept run --coverage-xml --env travis
 
 after_script:
     - ./vendor/bin/coveralls

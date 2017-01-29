@@ -1,37 +1,38 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jmercier
+ * User: Julien MERCIER <jeckel@jeckel.fr>
  * Date: 10/01/17
  * Time: 13:32
  */
 
 namespace Jeckel\Scrum\Slim;
 
+use Jeckel\Scrum\Controller\Factory\GetSprintFactory;
+use Jeckel\Scrum\Controller\Factory\SprintControllerFactory;
+use Jeckel\Scrum\Controller\GetSprint;
 use Jeckel\Scrum\Controller\ScrumController;
+use Jeckel\Scrum\Controller\SprintController;
+use Jeckel\Scrum\Controller\SprintGroup;
+use Jeckel\Scrum\Slim\Renderer\JsonRenderer;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Slim\Container;
-use Slim\Views\PhpRenderer;
 
+/**
+ * Class App
+ * @package Jeckel\Scrum\Slim
+ */
 class App extends \Slim\App
 {
     public function init(): App
     {
-        return $this->initDependencies()->initRoutes();
+        return $this->initDependencies()->registerFactories()->initRoutes();
     }
 
     protected function initDependencies(): App
     {
         $container = $this->getContainer();
-
-        // view renderer
-        $container['renderer'] = function ($c) {
-            /** @var Container $c */
-            $settings = $c->get('settings')['renderer'];
-            return new PhpRenderer($settings['template_path']);
-        };
 
         // monolog
         $container['logger'] = function ($c) {
@@ -43,20 +44,41 @@ class App extends \Slim\App
             return $logger;
         };
 
+        // Service factory for the ORM
+        $container['db'] = function ($container) {
+            $capsule = new \Illuminate\Database\Capsule\Manager();
+            $capsule->addConnection($container['settings']['db']);
+
+            $capsule->setAsGlobal();
+            $capsule->bootEloquent();
+
+            return $capsule;
+        };
+
         return $this;
     }
 
     protected function initRoutes(): App
     {
-        $this->post('/sprint', ScrumController::class . ':postCalculate');
-        $this->get('/hello/[{name}]', function ($request, $response, $args) {
-            // Sample log message
-            $this->logger->info("Slim-Skeleton '/' route");
+        $this->group(
+            '/sprint/{id:[0-9]+}',
+            function () {
+                $this->get('', SprintController::class . ':getSprint')->setName('sprint');;
+                $this->put('', SprintController::class . ':putSprint');
+                $this->delete('', SprintController::class . ':deleteSprint');
+            }
+        );
+        $this->post('/sprint', SprintController::class . ':addSprint');
 
-            // Render index view
-            return $this->renderer->render($response, 'index.phtml', $args);
-        });
+        $this->post('/scrum', ScrumController::class . ':postCalculate');
 
+        return $this;
+    }
+
+    protected function registerFactories(): App
+    {
+        $c = $this->getContainer();
+        $c[SprintController::class] = function(Container $c) { return (new SprintControllerFactory())($c); };
         return $this;
     }
 }

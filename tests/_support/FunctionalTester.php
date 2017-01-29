@@ -75,4 +75,9 @@ class FunctionalTester extends \Codeception\Actor
         // Return the response
         return $response;
     }
+
+    public function assertJsonAreEquals(string $json_assert, string $json_test)
+    {
+        return $this->assertEquals(json_decode($json_assert), json_decode($json_test));
+    }
 }

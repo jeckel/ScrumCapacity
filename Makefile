@@ -13,7 +13,11 @@ update:
 	$(COMPOSER) update --ignore-platform-reqs
 
 test:
-	$(CODECEPTION) run --coverage-xml
+	docker-compose run --rm codeception
+	#$(CODECEPTION) run --coverage-xml
 
 run:
-	docker run --rm -it -v `pwd`:/project -w /project -p 8080:8080 php:7-cli php -S 0.0.0.0:8080 -t public public/index.php
+	docker-compose -d up
+
+stop:
+	docker-compose stop

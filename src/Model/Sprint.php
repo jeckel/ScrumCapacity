@@ -1,36 +1,39 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jmercier
+ * User: Julien MERCIER <jeckel@jeckel.fr>
  * Date: 03/01/17
  * Time: 18:29
  */
 
 namespace Jeckel\Scrum\Model;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Class Sprint
  * @package Jeckel\Scrum\Model
  */
-/**
- * Class Sprint
- * @package Jeckel\Scrum\Model
- */
-class Sprint
+class Sprint extends Model implements JsonableInterface
 {
+    use SoftDeletes;
+    use JsonableTrait;
+
     const STATUS_PLANNED = 'planned';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CURRENT = 'current';
 
-    /**
-     * @var int
-     */
-    protected $id;
+    const TYPE = 'sprint';
+
+    protected $table = 'sprint';
+    protected $primaryKey = 'sprint_id';
 
     /**
-     * @var int
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
      */
-    protected $nb_days = 0;
+    protected $dates = ['deleted_at'];
 
     /**
      * @var array
@@ -52,7 +55,7 @@ class Sprint
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->sprint_id;
     }
 
     /**
@@ -61,7 +64,25 @@ class Sprint
      */
     public function setId(int $id): self
     {
-        $this->id = $id;
+        $this->sprint_id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return self
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
         return $this;
     }
 
@@ -183,4 +204,14 @@ class Sprint
         }
         return $this->points_done / $capacity;
     }
-}
+
+//    public function jsonSerialize()
+//    {
+//        //$array = ['id' => $this->getId(), 'type' => 'sprint'];
+//        //$array = array_merge($array, $this->toArray());
+//        $array = $this->toArray();
+//        unset($array['sprint_id']);
+//        return $array;
+//    }
+
+ }

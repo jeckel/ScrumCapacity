@@ -10,3 +10,7 @@ modules:
         # add framework module here
         - \Helper\Functional
         - Asserts
+        - Db:
+            populate: false
+            cleanup: true
+            reconnect: false

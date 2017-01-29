@@ -11,8 +11,9 @@
     "minimum-stability": "stable",
     "require": {
         "slim/slim": "^3.1",
-        "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
+        "illuminate/database": "~5.1",
+        "jeckel/jsonapi-response": "dev-master",
         "php": "^7.0"
     },
     "require-dev": {
